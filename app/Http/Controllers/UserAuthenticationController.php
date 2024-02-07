@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class UserAuthenticationController extends Controller
 {
-public function register(Request $request)
-{
+    public function register(Request $request)
+    {
         $name = $request->input('name');
         $email = strtolower($request->input('email'));
         $password = $request->input('password');
@@ -27,5 +27,40 @@ public function register(Request $request)
             'access_token' => $token,
             'token_type' => 'Bearer',
         ], 201);
-}
+    }
+
+    public function login(Request $request)
+    {
+        $email = strtolower($request->input('email'));
+        $password = $request->input('password');
+
+        $credentials = [
+            'email' => $email,
+            'password' => $password
+        ];
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'Invalid login credentials'
+            ], 401);
+        }
+
+        $user = User::where('email', $request['email'])->firstOrFail();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ], 200);
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Successfully Logged out'
+        ], 200);
+    }
 }

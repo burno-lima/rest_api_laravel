@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use MongoDB\Driver\Exception\AuthenticationException;
+use Illuminate\Http\Request;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,8 +25,17 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->reportable(function (AuthenticationException $exception, Request $request) {
+            if ($request->is('api/*')) {
+                if($exception instanceof AuthenticationException) {
+                    return $request->expectsJson() ?:
+                    response()->json([
+                'message' => 'Unauthenticated.',
+                'status' => 401,
+                'Description' => 'Missing or Invalid Access Token'
+            ], 401);
+                }
+            }
         });
     }
 }
