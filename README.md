@@ -1,7 +1,11 @@
 # Rest API Laravel
 
-- PHP 
-- Composer
+Este projeto foi criado com o propósito de aprender sobre o framework Laravel e como construir uma RESTful API seguindo o tutorial disponível em [IanKumu](https://www.iankumu.com/blog/laravel-rest-api/).
+
+## Pré-requisitos
+
+- PHP 8.3.2
+- Composer 2.6.6
 
 ## Instalação. 
 
