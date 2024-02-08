@@ -6,14 +6,14 @@
 ## Instalação. 
 
 1. Instale as dependências PHP usando o Composer:
-```bash
-composer install
-```
+    ```bash
+    composer install
+    ```
 
 2. Crie um arquivo `.env` baseado no arquivo `.env.example` e configure as variáveis de ambiente, incluindo o seguinte para utilizar o SQLite:
-```plaintext
-DB_CONNECTION=sqlite
-```
+    ```plaintext
+    DB_CONNECTION=sqlite
+    ```
 
 3. Execute o comando `touch database/database.sqlite` para criar o arquivo de banco de dados SQLite.
 
@@ -24,12 +24,12 @@ DB_CONNECTION=sqlite
    php artisan migrate
    ```
 
-5. Popular nosso banco de dados.
-```bash
-php artisan db:seed
-```
+5. Populae o banco de dados.
+    ```bash
+    php artisan db:seed
+    ```
 
 6. Subir aplicação.
-```
-php artisan serve
-```
+    ```bash
+    php artisan serve
+    ```
